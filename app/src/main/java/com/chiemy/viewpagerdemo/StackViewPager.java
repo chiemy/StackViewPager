@@ -1,7 +1,6 @@
 package com.chiemy.viewpagerdemo;
 
 import android.content.Context;
-import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -54,9 +53,13 @@ public class StackViewPager extends ViewPager {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     int position = getCurrentItem();
+                    Log.d(TAG, "onPageScrollStateChanged: " + position);
                     // 第二个
                     if (position <= 1) {
                         setCurrentItem(size + position, false);
+                        beginFakeDrag();
+                        fakeDragBy(1);
+                        endFakeDrag();
                     }
                     else if (position >= mInnerAdapter.getCount() - offsetCount) {
                         setCurrentItem(position - size, false);
